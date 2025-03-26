@@ -1,34 +1,46 @@
-# Phần 1: Docker Commands Cheat Sheet
+# Phần 1: Một số lệnh Docker Compose cơ bản
 
-## 1. Kiểm tra phiên bản Docker
+## 1. Kiểm tra phiên bản Docker compose
 ```sh
-docker --version
+docker compose version
 ```
-![image](https://github.com/user-attachments/assets/3c3392d6-608b-4a20-a460-77c878002627)
+![image](https://github.com/user-attachments/assets/6aba0982-233f-49b3-a587-c53c8ef82d05)
+
 
 ## 2. Chạy container kiểm tra
-```sh
-docker run hello-world
-```
-![image](https://github.com/user-attachments/assets/ba2c258f-57d1-407a-b1d1-4edfb29f3c3a)
+#### setup thư mục
+![image](https://github.com/user-attachments/assets/618d4b15-77c2-40b0-bff6-fdf5e03fa756)
+![image](https://github.com/user-attachments/assets/f5bdc844-3d80-45b5-9475-0cb7fd1f914a)
 
-## 3. Tải image từ Docker Hub
-```sh
-docker pull nginx
-```
-![image](https://github.com/user-attachments/assets/11925afe-fbb6-404a-ad79-60ca58e9c89a)
 
-## 4. Kiểm tra container chạy trên cổng 8080
 ```sh
-# Sau khi chạy nginx, kiểm tra bằng trình duyệt:
-http://localhost:8080
+docker compose up
 ```
-![image](https://github.com/user-attachments/assets/26899d6e-e15c-4382-90f4-29dc67464e1a)
+![image](https://github.com/user-attachments/assets/02038b7a-8bbb-4fc2-942e-61fc9e94f3b0)
+![image](https://github.com/user-attachments/assets/fdea5842-ed5e-49b7-a6ac-3467bface474)
+
+
+## 3. Chạy container nhưng không hiển thị log trong CMD
+```sh
+docker compose up -d
+```
+![image](https://github.com/user-attachments/assets/352118a1-c481-487f-9519-dc8f0928cd39)
+
+
+## 4. Xem danh sách container đang chạy.
+```sh
+docker compose ps
+```
+![image](https://github.com/user-attachments/assets/2e604ba0-2824-4d26-af76-8f81e7940987)
+
 ## 5. Liệt kê danh sách images
 ```sh
-docker images
+5.docker compose down
 ```
-![image](https://github.com/user-attachments/assets/09c96098-2a5b-4df3-a1fa-192c9d266360)
+- Dùng để Dừng và xóa container
+- Nó chỉ Xóa container nhưng giữ lại volume
+![image](https://github.com/user-attachments/assets/6af29bdd-dc63-44ce-afa1-f46506951bd7)
+
 
 ## 6. Chạy container ở chế độ nền
 ```sh
