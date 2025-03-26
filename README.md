@@ -1,11 +1,11 @@
-![image](https://github.com/user-attachments/assets/09310cc0-afd1-4fd0-b132-d5eac992c0ae)# Phần 1: Một số lệnh Docker Compose cơ bản
+# Phần 1: Một số lệnh Docker Compose cơ bản
 
 ## 1. Kiểm tra phiên bản Docker compose
 ```sh
 docker compose version
 ```
 ![image](https://github.com/user-attachments/assets/6aba0982-233f-49b3-a587-c53c8ef82d05)
-
+![image](https://github.com/user-attachments/assets/09310cc0-afd1-4fd0-b132-d5eac992c0ae)
 
 ## 2. Chạy container kiểm tra
 - setup thư mục
