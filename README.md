@@ -1,4 +1,4 @@
-# Phần 1: Một số lệnh Docker Compose cơ bản
+![image](https://github.com/user-attachments/assets/09310cc0-afd1-4fd0-b132-d5eac992c0ae)# Phần 1: Một số lệnh Docker Compose cơ bản
 
 ## 1. Kiểm tra phiên bản Docker compose
 ```sh
@@ -144,97 +144,82 @@ docker compose up:Khởi động tất cả container theo docker-compose.yml
 ![image](https://github.com/user-attachments/assets/3369a552-edb7-4d11-8c01-bc267fe0dc23)
 
 
-# Phần 2: Thao tác với Dockerfile
+# Phần 2: Thao tác với Docker Composefile
 
-## Bài 1: Tạo Dockerfile chạy một ứng dụng Node.js đơn giản
-
-### Yêu cầu:  
-- Viết Dockerfile để chạy một ứng dụng Node.js hiển thị "Hello, Docker!" trên cổng 3000.  
-- Sử dụng `node:18` làm base image.
-
----
-
-### **1. Setup**
-Tạo một thư mục mới và thêm các file sau:
-
-#### **app.js**
-```javascript
-const express = require('express');
-const app = express();
-const PORT = 3000;
-
-app.get('/', (req, res) => {
-    res.send('Hello, Docker!');
-});
-
-app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
-});
-```
-
-#### **package.json**
-```json
-{
-  "name": "docker-node-app",
-  "version": "1.0.0",
-  "main": "app.js",
-  "dependencies": {
-    "express": "^4.18.2"
-  }
-}
-```
-
-#### **Dockerfile**
-```dockerfile
-# Sử dụng node:18 làm base image
-FROM node:18
-
-# Đặt thư mục làm việc trong container
-WORKDIR /app
-
-# Copy file package.json và package-lock.json
-COPY package*.json ./
-
-# Cài đặt dependencies
-RUN npm install
-
-# Copy toàn bộ mã nguồn vào container
-COPY . .
-
-# Expose cổng 3000
-EXPOSE 3000
-
-# Lệnh chạy ứng dụng
-CMD ["node", "app.js"]
-```
-
----
-![image](https://github.com/user-attachments/assets/220fb65b-dc80-45dc-bf93-7ddff13acc2e)
-
-### **2. Build Docker Image**
+## Bài 1: Chạy một container đơn giản với Docker Compose		
+- Yêu cầu:	
+- Tạo một container chạy Nginx bằng Docker Compose.	
+- Map cổng 8080 của máy host với cổng 80 của container.
+- setup 
+![image](https://github.com/user-attachments/assets/da900d16-9c42-449f-9f0b-45acbd4e0751)
+- nội dung file docker-compose.yml
+![image](https://github.com/user-attachments/assets/2767c737-61d5-4565-b539-27034cfd5ede)
+- Chạy container với Docker Compose: docker compose up -d
+![image](https://github.com/user-attachments/assets/053cd31f-633c-4acb-a4a4-cbd966036d3f)
+- Kiểm tra container có chạy không ? 
 ```sh
-docker build -t my-node-app .
+docker compose ps
 ```
+![image](https://github.com/user-attachments/assets/2d024ffb-4aee-454d-a277-393fff335cf6)
+- Truy cập: http://localhost:8080 để kiểm tra
+![image](https://github.com/user-attachments/assets/44d1fb47-8c69-40b5-b2b2-ced98337dfdd)
 
----
-![image](https://github.com/user-attachments/assets/97107b58-a630-4fa9-bfda-ceaaeb36a7e8)
+## Bài 2: Chạy MySQL với Docker Compose	
+- Yêu cầu:		
+- Tạo một container chạy MySQL phiên bản 8.0.		
+- Đặt username là user, password là password và database là mydb
 
-### **3. Test Docker Container**
-Chạy container từ image đã build:
+- setup 
+![image](https://github.com/user-attachments/assets/c8000bfa-49f2-4ec0-bc79-dd0fe77be281)
+- nội dung file docker-compose.yml
+![image](https://github.com/user-attachments/assets/584ecbee-3372-41ac-b59b-4bbee7674961)
+- Chạy container với Docker Compose:
 ```sh
-docker run -d -p 3000:3000 my-node-app
+docker compose up -d
 ```
+![image](https://github.com/user-attachments/assets/519b1838-6018-446f-8576-a34e755fb108)
+- Kiểm tra container có chạy không ? docker compose ps
+![image](https://github.com/user-attachments/assets/6c9454da-620e-440c-8812-6aad5dc63826)
+- Kiểm tra kết quả:
+B1: dùng docker CLI: docker compose exec db mysql -u user -p
+B2: Nhập mật khẩu: root
+B3: Kết quả:
+![image](https://github.com/user-attachments/assets/91113c72-d3f0-4146-abf2-9cb49a24cab6)
 
-Kiểm tra ứng dụng bằng trình duyệt hoặc cURL:
+## Bài 3: Kết nối MySQL với PHPMyAdmin
+- Yêu cầu:	
+- Chạy MySQL và PHPMyAdmin với Docker Compose.	
+- PHPMyAdmin chạy trên cổng 8081.	
+- setup
+![image](https://github.com/user-attachments/assets/da14619b-e273-439f-91a9-acbd30a9e7d0)
+- docker compose file
+![image](https://github.com/user-attachments/assets/51bab1c4-7300-470c-9df9-f7e638759619)
+- run docker compose
+![image](https://github.com/user-attachments/assets/d0639c27-5602-4d00-ace2-e7c2cb2f2102)
+![image](https://github.com/user-attachments/assets/957923b7-989b-4aac-9b66-d6b6af507197)
+- Kiểm tra container có chạy không ? 
 ```sh
-curl http://localhost:3000
+docker compose ps
 ```
+![image](https://github.com/user-attachments/assets/2f949ee5-faa1-4c83-acab-f83176a28d03)
+-- Mở trình duyệt và truy cập: http://localhost:8081
+Thông tin đăng nhập PHPMyAdmin:
+Server: db
+User: root
+Password: root
+![image](https://github.com/user-attachments/assets/00787e46-7d29-4010-aedd-2cfffb99d887)
 
-Nếu thành công, bạn sẽ thấy thông báo:
-```
-Hello, Docker!
-```
-![image](https://github.com/user-attachments/assets/405eeef4-eb19-4419-98ed-f5079f462f38)
+## Bài 4: Chạy ứng dụng Node.js với Docker Compose		
+- Yêu cầu:	
+- Chạy một ứng dụng Node.js đơn giản với Express.
+- setup
+![image](https://github.com/user-attachments/assets/a25fbaeb-7b0b-420c-a062-f8ee88ffde54)
+- file Dokerfile
+![image](https://github.com/user-attachments/assets/8407af84-9b51-4593-a73e-59e82c5b3fdc)
+- file Docker-composefile
+![image](https://github.com/user-attachments/assets/4e9a3ae9-01a8-454b-aa1a-ff65ce161118)
+- build 
+![image](https://github.com/user-attachments/assets/d0a73985-9b9e-4249-83e1-aad9d23a34c4)
 
 
 
