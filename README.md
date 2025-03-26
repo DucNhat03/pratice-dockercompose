@@ -8,7 +8,7 @@ docker compose version
 
 
 ## 2. Chạy container kiểm tra
-#### setup thư mục
+- setup thư mục
 ![image](https://github.com/user-attachments/assets/618d4b15-77c2-40b0-bff6-fdf5e03fa756)
 ![image](https://github.com/user-attachments/assets/f5bdc844-3d80-45b5-9475-0cb7fd1f914a)
 
@@ -33,7 +33,7 @@ docker compose ps
 ```
 ![image](https://github.com/user-attachments/assets/2e604ba0-2824-4d26-af76-8f81e7940987)
 
-## 5. Liệt kê danh sách images
+## 5. Dừng và xóa container
 ```sh
 5.docker compose down
 ```
@@ -42,79 +42,106 @@ docker compose ps
 ![image](https://github.com/user-attachments/assets/6af29bdd-dc63-44ce-afa1-f46506951bd7)
 
 
-## 6. Chạy container ở chế độ nền
+## 6. Dùng để khởi động lại container
 ```sh
-docker run -d nginx
+docker compose restart
 ```
-![image](https://github.com/user-attachments/assets/7b622245-4f49-4996-a7a5-7202581c64ca)
+![image](https://github.com/user-attachments/assets/d75aa9e1-00c2-435c-b862-9345cf24201c)
 
-## 7. Liệt kê container đang chạy
+
+## 7. Xem log theo thời gian thực.
 ```sh
-docker ps
+7.docker compose logs -f
 ```
-![image](https://github.com/user-attachments/assets/dc9e9f41-0130-4a26-af86-31d8f03b0272)
+![image](https://github.com/user-attachments/assets/1db9188f-84cd-495d-a991-605a11fdf3b2)
+
 
 ## 8. Liệt kê toàn bộ container (bao gồm container đã dừng)
 ```sh
 docker ps -a
 ```
 ![image](https://github.com/user-attachments/assets/577afa8b-d463-4a73-a28d-b1ffe9160354)
+![image](https://github.com/user-attachments/assets/7ca8a2b1-514d-4b31-b33f-4687c271c8ad)
+![image](https://github.com/user-attachments/assets/4d44f880-b8bf-473a-a432-7d49dbf91423)
 
-## 9. Xem logs của container
+## 9. Build lại container
 ```sh
-docker logs <container_id>
+8.docker compose build	
 ```
-![image](https://github.com/user-attachments/assets/fd5f9a96-58b7-4a09-9327-2cf7ec193acd)
+- docker compose build: dùng để Build lại image
+- docker compose up -d --build: dùng để Build lại image và chạy container
+![image](https://github.com/user-attachments/assets/99dc6218-9901-4e0b-892a-0767749b510b)
 
-## 10. Truy cập vào container
+
+## 10. 9.docker compose exec <service_name> <command>
 ```sh
-docker exec -it <container_id> /bin/sh
+docker compose exec web bash
 ```
-![image](https://github.com/user-attachments/assets/737e7daf-42c5-43d8-95d6-9bf511203beb)
+- docker compose exec: Thực thi lệnh bên trong container đang chạy.
+- web: Tên của dịch vụ (container) mà bạn muốn truy cập.
+- bash: Mở terminal shell bên trong container.
+![image](https://github.com/user-attachments/assets/ceaf16db-b699-47cd-91a9-7a5adad975ec)
+- display xem một vài thông tin
+![image](https://github.com/user-attachments/assets/914c6a28-1934-403e-8357-d5f3a8a83e6d)
+- nhập ‘exit’ để thoát
 
-## 11. Dừng container
+## 11. docker compose down -v
 ```sh
-docker stop <container_id>
+docker compose down -v
 ```
-![image](https://github.com/user-attachments/assets/18ca216e-5cea-466f-aa9d-9567996bce3f)
+- dừng và xóa tất cả container, và nếu muốn xóa cả volume (dữ liệu MySQL)
+![image](https://github.com/user-attachments/assets/2c168b02-8730-43ed-a71b-8070fc672267)
 
-## 12. Khởi động lại container
+
+## 12. docker compose run <service_name> <command>
 ```sh
-docker restart <container_id>
+docker compose run web ls
 ```
-![image](https://github.com/user-attachments/assets/a286a175-d158-4fa3-bf24-74df7ee3c032)
-#### Stop
-![image](https://github.com/user-attachments/assets/997e8cc8-de59-4652-a045-9620110f6a6f)
-#### Restart
-![image](https://github.com/user-attachments/assets/ab9db0ce-2b66-45f8-b047-ba6cb6c2fd5b)
+- docker compose run web ls: Chạy lệnh ls trong container web.
+![image](https://github.com/user-attachments/assets/bfdf0fc3-df0a-46e8-baf3-c51e4d3d712e)
 
-## 13. Xóa container
+
+## 13. docker compose stop <service_name>
 ```sh
 docker rm <container_id>
 ```
-#### Để xóa, ban đầu container còn chạy -> stop container -> remove 
-![image](https://github.com/user-attachments/assets/e12f4351-3384-4cc4-9f92-db603b69639d)
+- docker compose ps để xem danh sách 
+![image](https://github.com/user-attachments/assets/2a7acb0f-63cf-40b0-a32c-d1e8ad85f484)
+- docker compose stop: Dừng container nhưng không xóa
+![image](https://github.com/user-attachments/assets/42509d5b-1168-43c4-bc4d-6a0a8ec50476)
 
-## 14. Xóa toàn bộ container đã dừng
+## 14. docker compose rm <service_name>
 ```sh
-docker container prune
+docker compose rm web
 ```
-#### 0B bởi vì lệnh này chỉ xóa những container đã đừng, mà crazy_swartz vẫn còn chạy, còn my-nginx đã xóa ở câu trước
-![image](https://github.com/user-attachments/assets/5e09d6d1-3f7c-4bfd-ac48-ec92694adb33)
+- b1: dừng container bằng: docker compose stop web
+![image](https://github.com/user-attachments/assets/8f2bc358-0cca-4c9b-959c-190d710b6cb1)
 
-## 15. Xóa image
+- b2: run lệnh “docker compose rm web”: Xóa container nhưng không xóa volume
+
+![image](https://github.com/user-attachments/assets/4f67a294-384e-4cd1-b932-49e3ceacf461)
+
+## 15. docker compose config
 ```sh
-docker rmi <image_id>
+docker compose config
 ```
-#### Đầu tiên xem danh sách container -> stop container -> xóa container -> xóa image -> kiểm tra lại image, container sau khi xóa
-![image](https://github.com/user-attachments/assets/0b4188e4-5b53-45de-90fd-e3169f09bd2d)
+- Kiểm tra và hiển thị file docker-compose.yml sau khi Docker Compose phân tích.
+- Giúp phát hiện lỗi cấu hình nếu có.
 
+![image](https://github.com/user-attachments/assets/e797df0d-b74c-4a80-bfad-4b1b6188abb7)
 
-## 16. Xóa toàn bộ image không sử dụng
+-> Không có lỗi, chỉ có cảnh báo version đã lỗi thời: "the attribute 'version' is obsolete, it will be ignored, please remove it to avoid potential confusion"
+-> Cách khắc phục: Mở file docker-compose.yml và xóa dòng ‘version: "3.8"’
+
+## 16. docker compose up -d --build
 ```sh
-docker image prune -a
+docker compose up -d --build
 ```
-![image](https://github.com/user-attachments/assets/f6f6db32-d696-4d52-abbf-20de7b90bb9f)
+docker compose up:Khởi động tất cả container theo docker-compose.yml
+-d: Chạy container ở chế độ nền (detached mode)
+--build: Build lại image trước khi chạy (nếu có thay đổi)
+
+![image](https://github.com/user-attachments/assets/3369a552-edb7-4d11-8c01-bc267fe0dc23)
 
 ## 17. Chạy container với port mapping
 ```sh
