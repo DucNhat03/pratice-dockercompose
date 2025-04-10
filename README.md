@@ -146,79 +146,262 @@ docker compose up:Khởi động tất cả container theo docker-compose.yml
 
 # Phần 2: Thao tác với Docker Composefile
 
-## Bài 1: Chạy một container đơn giản với Docker Compose		
-- Yêu cầu:	
-- Tạo một container chạy Nginx bằng Docker Compose.	
-- Map cổng 8080 của máy host với cổng 80 của container.
-- setup 
-![image](https://github.com/user-attachments/assets/da900d16-9c42-449f-9f0b-45acbd4e0751)
-- nội dung file docker-compose.yml
-![image](https://github.com/user-attachments/assets/2767c737-61d5-4565-b539-27034cfd5ede)
-- Chạy container với Docker Compose: docker compose up -d
-![image](https://github.com/user-attachments/assets/053cd31f-633c-4acb-a4a4-cbd966036d3f)
-- Kiểm tra container có chạy không ? 
-```sh
-docker compose ps
-```
-![image](https://github.com/user-attachments/assets/2d024ffb-4aee-454d-a277-393fff335cf6)
-- Truy cập: http://localhost:8080 để kiểm tra
-![image](https://github.com/user-attachments/assets/44d1fb47-8c69-40b5-b2b2-ced98337dfdd)
+## ✅ Bài 2: Chạy MySQL với Docker Compose
 
-## Bài 2: Chạy MySQL với Docker Compose	
-- Yêu cầu:		
-- Tạo một container chạy MySQL phiên bản 8.0.		
+### 📌 Yêu cầu:
+- Tạo một container chạy MySQL phiên bản 8.0.
 - Đặt username là user, password là password và database là mydb
 
-- setup 
-![image](https://github.com/user-attachments/assets/c8000bfa-49f2-4ec0-bc79-dd0fe77be281)
-- nội dung file docker-compose.yml
-![image](https://github.com/user-attachments/assets/584ecbee-3372-41ac-b59b-4bbee7674961)
-- Chạy container với Docker Compose:
+### ▶️ Chạy:
 ```sh
 docker compose up -d
 ```
-![image](https://github.com/user-attachments/assets/519b1838-6018-446f-8576-a34e755fb108)
-- Kiểm tra container có chạy không ? docker compose ps
-![image](https://github.com/user-attachments/assets/6c9454da-620e-440c-8812-6aad5dc63826)
-- Kiểm tra kết quả:
-B1: dùng docker CLI: docker compose exec db mysql -u user -p
-B2: Nhập mật khẩu: root
-B3: Kết quả:
-![image](https://github.com/user-attachments/assets/91113c72-d3f0-4146-abf2-9cb49a24cab6)
 
-## Bài 3: Kết nối MySQL với PHPMyAdmin
-- Yêu cầu:	
-- Chạy MySQL và PHPMyAdmin với Docker Compose.	
-- PHPMyAdmin chạy trên cổng 8081.	
-- setup
-![image](https://github.com/user-attachments/assets/da14619b-e273-439f-91a9-acbd30a9e7d0)
-- docker compose file
-![image](https://github.com/user-attachments/assets/51bab1c4-7300-470c-9df9-f7e638759619)
-- run docker compose
-![image](https://github.com/user-attachments/assets/d0639c27-5602-4d00-ace2-e7c2cb2f2102)
-![image](https://github.com/user-attachments/assets/957923b7-989b-4aac-9b66-d6b6af507197)
-- Kiểm tra container có chạy không ? 
+### 🧪 Kiểm tra:
 ```sh
-docker compose ps
+docker compose exec db mysql -u user -p
+# Nhập mật khẩu: root
 ```
-![image](https://github.com/user-attachments/assets/2f949ee5-faa1-4c83-acab-f83176a28d03)
--- Mở trình duyệt và truy cập: http://localhost:8081
-Thông tin đăng nhập PHPMyAdmin:
-Server: db
-User: root
-Password: root
-![image](https://github.com/user-attachments/assets/00787e46-7d29-4010-aedd-2cfffb99d887)
 
-## Bài 4: Chạy ứng dụng Node.js với Docker Compose		
-- Yêu cầu:	
+---
+
+## ✅ Bài 3: Kết nối MySQL với PHPMyAdmin
+
+### 📌 Yêu cầu:
+- Chạy MySQL và PHPMyAdmin với Docker Compose.
+- PHPMyAdmin chạy trên cổng 8081.
+
+### 🧪 Truy cập: 
+- Trình duyệt: http://localhost:8081
+- Server: db
+- User: root
+- Password: root
+
+---
+
+## ✅ Bài 4: Chạy ứng dụng Node.js với Docker Compose
+
+### 📌 Yêu cầu:
 - Chạy một ứng dụng Node.js đơn giản với Express.
-- setup
-![image](https://github.com/user-attachments/assets/a25fbaeb-7b0b-420c-a062-f8ee88ffde54)
-- file Dokerfile
-![image](https://github.com/user-attachments/assets/8407af84-9b51-4593-a73e-59e82c5b3fdc)
-- file Docker-composefile
-![image](https://github.com/user-attachments/assets/4e9a3ae9-01a8-454b-aa1a-ff65ce161118)
-- build 
+
+---
+
+## ✅ Bài 5: Chạy Redis với Docker Compose
+
+### 📌 Yêu cầu:
+- Chạy container Redis đơn giản.
+
+### 📄 docker-compose.yml:
+```yaml
+services:
+  redis:
+    image: redis
+    container_name: redis
+    ports:
+      - "6379:6379"
+```
+
+### ▶️ Chạy:
+```bash
+docker compose up -d
+```
+
+---
+
+## ✅ Bài 6: Chạy nhiều container cùng lúc
+
+### 📌 Yêu cầu:
+- Chạy 3 service: frontend, backend và database (MySQL)
+
+### 📄 docker-compose.yml:
+```yaml
+version: "3.8"
+services:
+  db:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: mydb
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+
+  backend:
+    build: ./backend
+    depends_on:
+      - db
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+```
+
+---
+
+## ✅ Bài 7: Chạy MongoDB với Docker Compose
+
+### 📌 Yêu cầu:
+- Chạy MongoDB và Mongo Express
+
+### 📄 docker-compose.yml:
+```yaml
+version: '3'
+services:
+  mongo:
+    image: mongo
+    ports:
+      - "27017:27017"
+    container_name: mongodb
+
+  mongo-express:
+    image: mongo-express
+    ports:
+      - "8082:8081"
+    environment:
+      ME_CONFIG_MONGODB_SERVER: mongo
+```
+
+---
+
+## ✅ Bài 8: Kết nối nhiều dịch vụ với Docker Compose
+
+### 📌 Yêu cầu:
+- Chạy ứng dụng Node.js kết nối với MySQL
+
+### 📄 docker-compose.yml:
+```yaml
+version: '3.8'
+services:
+  db:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: mydb
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+
+  app:
+    build: .
+    ports:
+      - "3001:3000"
+    depends_on:
+      - db
+```
+
+---
+
+## ✅ Bài 9: Chạy ứng dụng Python Flask với Docker Compose
+
+### 📌 Yêu cầu:
+- Chạy ứng dụng Flask đơn giản
+
+### 📄 Dockerfile:
+```dockerfile
+FROM python:3.9
+WORKDIR /app
+COPY . .
+RUN pip install -r requirements.txt
+CMD ["python", "app.py"]
+```
+
+### 📄 docker-compose.yml:
+```yaml
+version: '3'
+services:
+  flask-app:
+    build: .
+    ports:
+      - "5000:5000"
+```
+
+---
+
+## ✅ Bài 10: Lưu trữ dữ liệu với Docker Volumes
+
+### 📌 Yêu cầu:
+- Chạy MySQL với volume để giữ lại dữ liệu
+
+### 📄 docker-compose.yml:
+```yaml
+version: '3'
+services:
+  mysql-volume:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: mydb
+    volumes:
+      - mysql_data:/var/lib/mysql
+volumes:
+  mysql_data:
+```
+
+---
+
+## ✅ Bài 11: Chạy dịch vụ Postgres với Adminer
+
+### 📌 Yêu cầu:
+- PostgreSQL với database `mydb`, user `user`, password `password`
+- Adminer chạy trên cổng 8083
+
+### 📄 docker-compose.yml:
+```yaml
+version: '3'
+services:
+  postgres:
+    image: postgres
+    environment:
+      POSTGRES_DB: mydb
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+
+  adminer:
+    image: adminer
+    ports:
+      - "8083:8080"
+```
+
+---
+
+## ✅ Bài 12: Giám sát container với Prometheus và Grafana
+
+### 📌 Yêu cầu:
+- Chạy Prometheus, Grafana và Node Exporter bằng Docker Compose
+
+### 📄 docker-compose.yml:
+```yaml
+version: '3.7'
+services:
+  prometheus:
+    image: prom/prometheus
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+
+  node-exporter:
+    image: prom/node-exporter
+    ports:
+      - "9100:9100"
+
+  grafana:
+    image: grafana/grafana
+    ports:
+      - "3000:3000"
+```
+
+### 📄 prometheus.yml:
+```yaml
+global:
+  scrape_interval: 15s
+scrape_configs:
+  - job_name: 'node'
+    static_configs:
+      - targets: ['node-exporter:9100']
+```
+
 ![image](https://github.com/user-attachments/assets/d0a73985-9b9e-4249-83e1-aad9d23a34c4)
 
 
